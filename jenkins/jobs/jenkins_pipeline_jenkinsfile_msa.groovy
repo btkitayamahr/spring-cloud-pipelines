@@ -25,3 +25,58 @@ dsl.pipelineJob('msa-pipline-discovery') {
 	}
 }
 
+dsl.pipelineJob('msa-pipline-config') {
+	wrappers {
+		parameters {
+			stringParam('APP_REPOSITORY', 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git', "The URL with application repository. Also git repository")
+			stringParam('APP_BRANCH', 'master', "The branch with application")
+		}
+	}
+	definition {
+		cps {
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-config')}""")
+		}
+	}
+}
+
+dsl.pipelineJob('msa-pipline-gateway') {
+	wrappers {
+		parameters {
+			stringParam('APP_REPOSITORY', 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git', "The URL with application repository. Also git repository")
+			stringParam('APP_BRANCH', 'master', "The branch with application")
+		}
+	}
+	definition {
+		cps {
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-gateway')}""")
+		}
+	}
+}
+
+dsl.pipelineJob('msa-pipline-contents') {
+	wrappers {
+		parameters {
+			stringParam('APP_REPOSITORY', 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git', "The URL with application repository. Also git repository")
+			stringParam('APP_BRANCH', 'master', "The branch with application")
+		}
+	}
+	definition {
+		cps {
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-contents')}""")
+		}
+	}
+}
+
+dsl.pipelineJob('msa-pipline-frontend') {
+	wrappers {
+		parameters {
+			stringParam('APP_REPOSITORY', 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git', "The URL with application repository. Also git repository")
+			stringParam('APP_BRANCH', 'master', "The branch with application")
+		}
+	}
+	definition {
+		cps {
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-frontend')}""")
+		}
+	}
+}
