@@ -93,7 +93,7 @@ factory.job('msa-pipeline-seed') {
 	steps {
 		gradle("clean build -x test")
 		dsl {
-			external('jenkins/jobs/jenkins_pipeline_jenkinsfile_sample.groovy')
+			external('jenkins/jobs/jenkins_pipeline_jenkinsfile_msa.groovy')
 			removeAction('DISABLE')
 			removeViewAction('DELETE')
 			ignoreExisting(false)
