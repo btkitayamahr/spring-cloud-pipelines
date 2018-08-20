@@ -1,26 +1,26 @@
 node {
-    stage('git pull') {
-        deleteDir()
-        sh 'git config --global http.sslVerify false'
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: '*/master']],
-            doGenerateSubmoduleConfigurations: false,
-            extensions: [],
-            submoduleCfg: [],
-            userRemoteConfigs: [
-                [
-                    credentialsId: 'git-gitbucket',
-                    url: 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
-                ]
-            ]
-        ])
-    }
-    stage('build') {
-      dir("${WORKSPACE}/discovery") {
-        withMaven( maven: "Maven") {
-          sh 'mvn clean install'
-        }
-      }
-    }
+	stage('git pull') {
+		deleteDir()
+		sh 'git config --global http.sslVerify false'
+		checkout([
+			$class: 'GitSCM',
+			branches: [[name: '*/${APP_BRANCH}']],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [],
+			submoduleCfg: [],
+			userRemoteConfigs: [
+				[
+					credentialsId: 'git-gitbucket',
+					url: '${APP_REPOSITORY}'
+				]
+			]
+		])
+	}
+	stage('build') {
+		dir("${WORKSPACE}/discovery") {
+			withMaven( maven: "Maven") {
+				sh 'mvn clean install'
+			}
+		}
+	}
 }
