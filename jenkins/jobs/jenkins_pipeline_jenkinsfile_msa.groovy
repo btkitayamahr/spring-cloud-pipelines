@@ -131,7 +131,7 @@ parsedRepos.each {
 		}
 	}
 	String projectName = "${gitRepoName}-declarative-pipeline"
-	
+
 	envs['GIT_REPOSITORY'] = fullGitRepo
 	envs['GIT_BRANCH_NAME'] = branchName
 
@@ -144,6 +144,14 @@ parsedRepos.each {
 		definition {
 			cps {
 				script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
+			}
+		}
+	}
+
+	dsl.pipelineJob('msa-pipline-discovery') {
+		definition {
+			cps {
+				script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
 			}
 		}
 	}
