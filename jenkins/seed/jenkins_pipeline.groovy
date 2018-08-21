@@ -21,7 +21,7 @@ factory.job('msa-pipeline-seed') {
 	}
 	wrappers {
 		parameters {
-			stringParam('TOOLS_REPOSITORY', 'https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
+			stringParam('TOOLS_REPOSITORY', 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
 tion.git', "The repository with pipeline functions")
 			stringParam('TOOLS_BRANCH', 'master', "The branch with pipeline functions")
 		}
