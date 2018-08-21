@@ -3,24 +3,25 @@ import javaposse.jobdsl.dsl.DslFactory
 DslFactory factory = this
 
 factory.job('msa-pipeline-seed') {
-	scm {
-		git {
-			remote {
+//	scm {
+//		git {
+//			remote {
 //				github('btkitayamahr/spring-cloud-pipelines')
-//			branch('${TOOLS_BRANCH}')
-				git('https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
-tion.git', '${TOOLS_BRANCH}')
-			}
-			extensions {
-				submoduleOptions {
-					recursive()
-				}
-			}
-		}
+//				branch('${TOOLS_BRANCH}')
+//			}
+//			extensions {
+//				submoduleOptions {
+//					recursive()
+//				}
+//			}
+//		}
+//	}
+	scm {
+		git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
 	}
 	wrappers {
 		parameters {
-//			stringParam('TOOLS_REPOSITORY', 'https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
+			stringParam('TOOLS_REPOSITORY', 'https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
 tion.git', "The repository with pipeline functions")
 			stringParam('TOOLS_BRANCH', 'master', "The branch with pipeline functions")
 		}
