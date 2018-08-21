@@ -1,6 +1,8 @@
 import javaposse.jobdsl.dsl.DslFactory
 
 DslFactory factory = this
+String credentials = 'git-gitbucket'
+usernamePassword('btkitayamahr', 'btkitayamahr' credentials)
 
 factory.job('msa-pipeline-seed') {
 //	scm {
@@ -18,7 +20,7 @@ factory.job('msa-pipeline-seed') {
 //	}
 	scm {
 		git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
-		credentialsId("git-gitbucket")
+		credentialsId(credentials)
 	}
 	wrappers {
 		parameters {
