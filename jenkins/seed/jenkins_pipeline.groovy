@@ -7,10 +7,9 @@ factory.job('msa-pipeline-seed') {
 		git {
 			remote {
 //				github('btkitayamahr/spring-cloud-pipelines')
-				git('https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
-tion.git')
+//			branch('${TOOLS_BRANCH}')
+				git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
 			}
-			branch('${TOOLS_BRANCH}')
 			extensions {
 				submoduleOptions {
 					recursive()
@@ -20,6 +19,8 @@ tion.git')
 	}
 	wrappers {
 		parameters {
+			stringParam('TOOLS_REPOSITORY', 'https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
+tion.git', "The repository with pipeline functions")
 			stringParam('TOOLS_BRANCH', 'master', "The branch with pipeline functions")
 		}
 	}
