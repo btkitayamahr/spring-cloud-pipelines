@@ -18,7 +18,7 @@ factory.job('msa-pipeline-seed') {
 //	}
 	scm {
 		git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
-		credentials('git-gitbucket')
+		credentialsId('git-gitbucket')
 	}
 	wrappers {
 		parameters {
