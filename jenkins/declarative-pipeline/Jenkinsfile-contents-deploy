@@ -82,7 +82,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker run -d --name contents -p 9120:9120 52.194.221.169:5000/app/contents',
+							execCommand: 'sudo docker run -d --name contents -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9120:9120 52.194.221.169:5000/app/contents',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
