@@ -17,7 +17,12 @@ factory.job('msa-pipeline-seed') {
 //		}
 //	}
 	scm {
-		git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
+		git {
+			remote {
+				git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
+				credentials('git-gitbucket')
+			}
+		}
 	}
 	wrappers {
 		parameters {
