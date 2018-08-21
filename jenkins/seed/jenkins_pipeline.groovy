@@ -3,26 +3,13 @@ import javaposse.jobdsl.dsl.DslFactory
 DslFactory factory = this
 
 factory.job('msa-pipeline-seed') {
-//	scm {
-//		git {
-//			remote {
-//				github('btkitayamahr/spring-cloud-pipelines')
-//				branch('${TOOLS_BRANCH}')
-//			}
-//			extensions {
-//				submoduleOptions {
-//					recursive()
-//				}
-//			}
-//		}
-//	}
 	scm {
 		git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
 	}
 	wrappers {
 		parameters {
-			stringParam('TOOLS_REPOSITORY', '', "The repository with pipeline functions")
-			stringParam('TOOLS_BRANCH', 'master', "The branch with pipeline functions")
+			stringParam('TOOLS_REPOSITORY', 'https://github.com/btkitayamahr/spring-cloud-pipelines.git', "The repository with pipeline functions")
+			stringParam('TOOLS_BRANCH', 'develop', "The branch with pipeline functions")
 		}
 	}
 	steps {
