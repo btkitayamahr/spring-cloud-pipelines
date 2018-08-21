@@ -3,7 +3,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -28,7 +28,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -53,7 +53,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -82,7 +82,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker run -d --name discovery -p 9120:9120 52.194.221.169:5000/app/discovery',
+							execCommand: 'sudo docker run -d --name discovery -p 9000:9000 52.194.221.169:5000/app/discovery',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
