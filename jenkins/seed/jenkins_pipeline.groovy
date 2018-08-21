@@ -6,7 +6,9 @@ factory.job('msa-pipeline-seed') {
 	scm {
 		git {
 			remote {
-				github('btkitayamahr/spring-cloud-pipelines')
+//				github('btkitayamahr/spring-cloud-pipelines')
+				git('https://btkitayamahr:btkitayamahr@terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verifica
+tion.git')
 			}
 			branch('${TOOLS_BRANCH}')
 			extensions {
