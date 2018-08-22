@@ -17,7 +17,7 @@ node {
 		])
 	}
 	stage('build') {
-		dir("${WORKSPACE}/contents") {
+		dir("${WORKSPACE}/discovery") {
 			withMaven( maven: "Maven") {
 				sh 'mvn clean install'
 			}
@@ -27,11 +27,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker stop contents',
+							execCommand: 'sudo docker stop discovery',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -52,11 +52,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rm contents',
+							execCommand: 'sudo docker rm discovery',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -77,11 +77,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rmi 52.194.221.169:5000/app/contents',
+							execCommand: 'sudo docker rmi 52.194.221.169:5000/app/discovery',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -102,11 +102,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'msa-contents',
+					configName: 'docker-sample',
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker run -d --name contents -p 9120:9120 52.194.221.169:5000/app/contents',
+							execCommand: 'sudo docker run -d --name discovery -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9000:9000 52.194.221.169:5000/app/discovery',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
