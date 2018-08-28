@@ -1,33 +1,37 @@
 node {
-	stage('git pull') {
+	stage('Build and Upload') {
 		deleteDir()
 		sh 'git config --global http.sslVerify false'
+		
+		// git clone
 		checkout([
 			$class: 'GitSCM',
-			branches: [[name: '*/${APP_BRANCH}']],
+			branches: [[name: '*/${GIT_BRANCH_NAME}']],
 			doGenerateSubmoduleConfigurations: false,
 			extensions: [],
 			submoduleCfg: [],
 			userRemoteConfigs: [
 				[
-					credentialsId: 'git-gitbucket',
-					url: '${APP_REPOSITORY}'
+					credentialsId: '${GIT_CREDENTIAL_ID}',
+					url: '${GIT_REPOSITORY}'
 				]
 			]
 		])
-	}
-	stage('build') {
+
+		// Build app and create docker image
 		dir("${WORKSPACE}/contents") {
 			withMaven( maven: "Maven") {
 				sh 'mvn clean install'
 			}
 		}
 	}
-	stage('deploy') {
+
+	stage('Deploy to test') {
+		// Stop docker container
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'docker-sample',
+					configName: '${SSH_CONFIG_NAME_TEST}',
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -52,7 +56,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'docker-sample',
+					configName: '${SSH_CONFIG_NAME_TEST}',
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -77,11 +81,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'docker-sample',
+					configName: '${SSH_CONFIG_NAME_TEST}',
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rmi 52.194.221.169:5000/app/contents',
+							execCommand: 'sudo docker rmi ${DOCKER_REGISTRY_HOSTNAME}:${DOCKER_REGISTRY_PORT}/app/contents',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -102,11 +106,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: 'docker-sample',
+					configName: '${SSH_CONFIG_NAME_TEST}',
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker run -d --name contents -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9120:9120 52.194.221.169:5000/app/contents',
+							execCommand: 'sudo docker run -d --name contents -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9120:9120 ${DOCKER_REGISTRY_HOSTNAME}:${DOCKER_REGISTRY_PORT}/app/contents',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
