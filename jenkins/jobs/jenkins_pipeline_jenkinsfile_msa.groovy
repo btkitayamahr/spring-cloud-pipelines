@@ -34,6 +34,11 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 		parameters {
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
+			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
+			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
+			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
+			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
+			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
 		}
 		environmentVariables {
 			environmentVariables(envs)
@@ -55,6 +60,15 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
 	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -e ' + urlEureka + ' --net=msa_blank -p 9010:9010 ' + imageTag
 	wrappers {
+		parameters {
+			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
+			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
+			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
+			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
+			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
+			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
+			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
+		}
 		environmentVariables {
 			environmentVariables(envs)
 		}
@@ -75,6 +89,15 @@ dsl.pipelineJob('msa-pipeline-config') {
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
 	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -e ' + urlEureka + ' --net=msa_blank -p 8888:8888 ' + imageTag
 	wrappers {
+		parameters {
+			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
+			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
+			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
+			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
+			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
+			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
+			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
+		}
 		environmentVariables {
 			environmentVariables(envs)
 		}
@@ -95,6 +118,15 @@ dsl.pipelineJob('msa-pipeline-contents') {
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
 	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -e ' + urlEureka + ' --net=msa_blank -p 9120:9120 ' + imageTag
 	wrappers {
+		parameters {
+			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
+			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
+			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
+			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
+			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
+			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
+			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
+		}
 		environmentVariables {
 			environmentVariables(envs)
 		}
@@ -116,6 +148,15 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
 	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -e ' + urlEureka + ' --net=msa_blank -p 9110:9110 ' + imageTag
 	wrappers {
+		parameters {
+			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
+			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
+			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
+			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
+			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
+			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
+			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
+		}
 		environmentVariables {
 			environmentVariables(envs)
 		}
