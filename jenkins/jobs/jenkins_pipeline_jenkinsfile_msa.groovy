@@ -31,6 +31,10 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
 	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' --net=msa_blank -p 9000:9000 ' + imageTag
 	wrappers {
+		parameters {
+			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
+			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
+		}
 		environmentVariables {
 			environmentVariables(envs)
 		}
