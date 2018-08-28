@@ -6,14 +6,16 @@ node {
 		// git clone
 		checkout([
 			$class: 'GitSCM',
-			branches: [[name: '*/${GIT_BRANCH_NAME}']],
+			branches: [
+				[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
+			],
 			doGenerateSubmoduleConfigurations: false,
 			extensions: [],
 			submoduleCfg: [],
 			userRemoteConfigs: [
 				[
-					credentialsId: ${GIT_CREDENTIAL_ID},
-					url: ${GIT_REPOSITORY}
+					credentialsId: env.GIT_CREDENTIAL_ID,
+					url: env.GIT_REPOSITORY
 				]
 			]
 		])
@@ -31,7 +33,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: ${SSH_CONFIG_NAME_TEST},
+					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -56,7 +58,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: ${SSH_CONFIG_NAME_TEST},
+					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -81,11 +83,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: ${SSH_CONFIG_NAME_TEST},
+					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rmi ${DOCKER_REGISTRY_HOSTNAME}:${DOCKER_REGISTRY_PORT}/app/contents',
+							execCommand: 'sudo docker rmi DOCKER_REGISTRY_HOSTNAME:env.DOCKER_REGISTRY_PORT/app/contents',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -106,11 +108,11 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: ${SSH_CONFIG_NAME_TEST},
+					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker run -d --name contents -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9120:9120 ${DOCKER_REGISTRY_HOSTNAME}:${DOCKER_REGISTRY_PORT}/app/contents',
+							execCommand: 'sudo docker run -d --name contents -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9120:9120 env.DOCKER_REGISTRY_HOSTNAME:env.DOCKER_REGISTRY_PORT/app/contents',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
