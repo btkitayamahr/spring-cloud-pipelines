@@ -12,8 +12,8 @@ node {
 			submoduleCfg: [],
 			userRemoteConfigs: [
 				[
-					credentialsId: '${GIT_CREDENTIAL_ID}',
-					url: '${GIT_REPOSITORY}'
+					credentialsId: ${GIT_CREDENTIAL_ID},
+					url: ${GIT_REPOSITORY}
 				]
 			]
 		])
@@ -31,7 +31,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: '${SSH_CONFIG_NAME_TEST}',
+					configName: ${SSH_CONFIG_NAME_TEST},
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -56,7 +56,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: '${SSH_CONFIG_NAME_TEST}',
+					configName: ${SSH_CONFIG_NAME_TEST},
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -81,7 +81,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: '${SSH_CONFIG_NAME_TEST}',
+					configName: ${SSH_CONFIG_NAME_TEST},
 					transfers: [
 						sshTransfer(
 							excludes: '',
@@ -106,7 +106,7 @@ node {
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
-					configName: '${SSH_CONFIG_NAME_TEST}',
+					configName: ${SSH_CONFIG_NAME_TEST},
 					transfers: [
 						sshTransfer(
 							excludes: '',
