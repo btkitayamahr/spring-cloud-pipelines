@@ -56,7 +56,7 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9000:9000 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9000:9000 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
 
 	wrappers {
 		parameters {
@@ -85,7 +85,7 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9110:9110 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9110:9110 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
 
 	wrappers {
 		parameters {
@@ -114,7 +114,7 @@ dsl.pipelineJob('msa-pipeline-contents') {
 	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9120:9120 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9120:9120 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
 
 	wrappers {
 		parameters {
@@ -143,7 +143,7 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
 	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9010:9010 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9010:9010 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
 
 	wrappers {
 		parameters {
