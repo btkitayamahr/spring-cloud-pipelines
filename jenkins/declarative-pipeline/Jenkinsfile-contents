@@ -87,7 +87,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rmi DOCKER_REGISTRY_HOSTNAME:env.DOCKER_REGISTRY_PORT/app/contents',
+							execCommand: 'sudo docker rmi env.DOCKER_REGISTRY_HOSTNAME:env.DOCKER_REGISTRY_PORT/app/contents',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
