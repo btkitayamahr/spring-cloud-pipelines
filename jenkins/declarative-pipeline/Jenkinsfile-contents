@@ -21,7 +21,7 @@ node {
 		])
 
 		// Build app and create docker image
-		dir("${WORKSPACE}/contents") {
+		dir("${WORKSPACE}/" + env.APP_NAME) {
 			withMaven( maven: "Maven") {
 				sh 'mvn clean install'
 			}
@@ -37,7 +37,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker stop contents',
+							execCommand: env.DEPLOY_COMMAND_01
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -62,7 +62,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rm contents',
+							execCommand: env.DEPLOY_COMMAND_02
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -87,7 +87,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker rmi ${env.DOCKER_REGISTRY_HOSTNAME}:${env.DOCKER_REGISTRY_PORT}/app/contents',
+							execCommand: env.DEPLOY_COMMAND_03
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -112,7 +112,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker run -d --name contents -e EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://54.238.143.77:9000/eureka/ --net=msa_blank -p 9120:9120 ${env.DOCKER_REGISTRY_HOSTNAME}:${env.DOCKER_REGISTRY_PORT}/app/contents',
+							execCommand: env.DEPLOY_COMMAND_04
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
