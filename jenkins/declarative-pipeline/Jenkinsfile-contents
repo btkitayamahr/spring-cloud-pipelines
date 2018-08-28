@@ -37,7 +37,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_01
+							execCommand: env.DEPLOY_COMMAND_01,
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -62,7 +62,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_02
+							execCommand: env.DEPLOY_COMMAND_02,
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -87,7 +87,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_03
+							execCommand: env.DEPLOY_COMMAND_03,
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -112,7 +112,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_04
+							execCommand: env.DEPLOY_COMMAND_04,
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
