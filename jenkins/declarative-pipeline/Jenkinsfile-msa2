@@ -60,7 +60,7 @@ node {
 							patternSeparator: '[, ]+',
 							remoteDirectory: '',
 							remoteDirectorySDF: false,
-							removePrefix: 'ommon/src/main/bash/ec2',
+							removePrefix: 'common/src/main/bash/ec2',
 							sourceFiles: 'common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_YML
 						)
 					],
