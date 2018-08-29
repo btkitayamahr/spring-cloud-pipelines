@@ -12,6 +12,8 @@ DslFactory dsl = this
 String jenkinsfileDir = binding.variables["JENKINSFILE_DIR"] ?: "${WORKSPACE}/jenkins/declarative-pipeline"
 
 Map<String, Object> envs = [:]
+envs['HOGE_FUGA'] = binding.variables["HOGE_FUGA"]
+
 envs['GIT_REPOSITORY'] = 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
 envs['GIT_BRANCH_NAME'] = 'scc'
 envs['GIT_CREDENTIAL_ID'] = 'git-gitbucket'
@@ -31,6 +33,7 @@ dsl.pipelineJob('msa-pipeline-config') {
 
 	wrappers {
 		parameters {
+			stringParam('HOGE_FUGA', envs['HOGE_FUGA'], "")
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
