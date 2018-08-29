@@ -1,0 +1,12 @@
+version: "2"
+services:
+  config:
+    image: 13.112.188.210:5000/app/config
+    environment:
+      SPRING_CLOUD_CONFIG_LABEL: scc
+      INFO_CONFIG_HOSTNAME: 13.115.229.114
+    ports:
+      - "8888:8888"
+    networks:
+      - msa_blank
+
