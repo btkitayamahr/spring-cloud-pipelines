@@ -21,6 +21,13 @@ node {
 			]
 		])
 
+		// Build app and create docker image
+		dir("${WORKSPACE}/" + env.APP_NAME) {
+			withMaven( maven: "Maven") {
+				sh 'mvn clean install'
+			}
+		}
+
 		// git clone spring-cloud-pipelines repository
 		checkout([
 			$class: 'GitSCM',
@@ -38,13 +45,6 @@ node {
 				]
 			]
 		])
-
-		// Build app and create docker image
-		dir("${WORKSPACE}/" + env.APP_NAME) {
-			withMaven( maven: "Maven") {
-				sh 'mvn clean install'
-			}
-		}
 	}
 
 	stage('Deploy to test') {
@@ -63,7 +63,7 @@ node {
 							patternSeparator: '[, ]+',
 							remoteDirectory: '',
 							remoteDirectorySDF: false,
-							removePrefix: '${WORKSPACE}@tools/common/src/main/bash/ec2/',
+							removePrefix: '${WORKSPACE}@tools/common/src/main/bash/ec2',
 							sourceFiles: '${WORKSPACE}@tools/common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_NAME
 						)
 					],
