@@ -83,23 +83,24 @@ node {
 				)
 			]
 		)
-//		sshPublisher(
-//			publishers: [
-//				sshPublisherDesc(
-//					configName: env.SSH_CONFIG_NAME_TEST,
-//					transfers: [
-//						sshTransfer(
-//							excludes: '',
-//							execCommand: 'sudo docker-compose -f ' + env.DOCKER_COMPOSE_YML_TEST + ' up -d --force-recreate',
-//							execTimeout: 120000
-//							flatten: false,
-//							makeEmptyDirs: false,
-//							noDefaultExcludes: false,
-//							patternSeparator: '[, ]+',
-//							remoteDirectory: '',
-//							remoteDirectorySDF: false,
-//							removePrefix: '',
-//							sourceFiles: ''
+/*
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_TEST,
+					transfers: [
+						sshTransfer(
+							excludes: '',
+							execCommand: 'sudo docker-compose -f ' + env.DOCKER_COMPOSE_YML_TEST + ' up -d --force-recreate',
+							execTimeout: 120000
+							flatten: false,
+							makeEmptyDirs: false,
+							noDefaultExcludes: false,
+							patternSeparator: '[, ]+',
+							remoteDirectory: '',
+							remoteDirectorySDF: false,
+							removePrefix: '',
+							sourceFiles: ''
 						)
 					],
 					usePromotionTimestamp: false,
@@ -108,5 +109,6 @@ node {
 				)
 			]
 		)
+*/
 	}
 }
