@@ -10,7 +10,6 @@ factory.job('msa-pipeline-seed') {
 		parameters {
 			stringParam('TOOLS_REPOSITORY', 'https://github.com/btkitayamahr/spring-cloud-pipelines.git', "The repository with pipeline functions")
 			stringParam('TOOLS_BRANCH', 'develop', "The branch with pipeline functions")
-			stringParam('HOGE_FUGA', 'hogefuga', "")
 		}
 	}
 	steps {
