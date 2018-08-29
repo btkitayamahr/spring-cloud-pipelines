@@ -26,14 +26,8 @@ envs['DOCKER_REGISTRY_PORT'] = '5000'
 
 dsl.pipelineJob('msa-pipeline-config') {
 	envs['APP_NAME'] = 'config'
-	envs['DOCKER_COMPOSE_NAME'] = 'docker-compose-config.yml'
-/*
-	String imageTag = envs['DOCKER_REGISTRY_HOSTNAME'] + ':' + envs['DOCKER_REGISTRY_PORT'] + '/app/' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 8888:8888 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
-*/
+	envs['DOCKER_COMPOSE_YML'] = 'docker-compose-config.yml'
+
 	wrappers {
 		parameters {
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")

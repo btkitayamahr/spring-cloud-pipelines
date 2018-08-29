@@ -31,16 +31,13 @@ node {
 		// git clone spring-cloud-pipelines repository
 		checkout([
 			$class: 'GitSCM',
+			clearWorkspace: true,
 			branches: [
 				[name: "*/${env.TOOLS_BRANCH}"]
 			],
-			extensions: [
-				[$class: 'WipeWorkspace'],
-				[$class: 'RelativeTargetDirectory', relativeTargetDir: "${env.WORKSPACE}@tools"]
-			],
 			userRemoteConfigs: [
 				[
-//					credentialsId: env.GIT_CREDENTIAL_ID,
+					credentialsId: env.GIT_CREDENTIAL_ID,
 					url: env.TOOLS_REPOSITORY
 				]
 			]
@@ -54,17 +51,17 @@ node {
 					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
-							excludes: '',
-							execCommand: '',
-							execTimeout: 120000,
-							flatten: false,
+//							excludes: '',
+//							execCommand: '',
+//							execTimeout: 120000,
+//							flatten: false,
 							makeEmptyDirs: false,
 							noDefaultExcludes: false,
 							patternSeparator: '[, ]+',
 							remoteDirectory: '',
 							remoteDirectorySDF: false,
-							removePrefix: '${WORKSPACE}@tools/common/src/main/bash/ec2',
-							sourceFiles: '${WORKSPACE}@tools/common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_NAME
+							removePrefix: 'ommon/src/main/bash/ec2',
+							sourceFiles: 'common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_YML
 						)
 					],
 					usePromotionTimestamp: false,
@@ -80,16 +77,16 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: 'sudo docker-compose up --force-recreate',
-							execTimeout: 120000,
-							flatten: false,
-							makeEmptyDirs: false,
-							noDefaultExcludes: false,
-							patternSeparator: '[, ]+',
-							remoteDirectory: '',
-							remoteDirectorySDF: false,
-							removePrefix: '',
-							sourceFiles: ''
+							execCommand: 'sudo docker-compose -f env.DOCKER_COMPOSE_YML up -d --force-recreate',
+							execTimeout: 120000
+//							flatten: false,
+//							makeEmptyDirs: false,
+//							noDefaultExcludes: false,
+//							patternSeparator: '[, ]+',
+//							remoteDirectory: '',
+//							remoteDirectorySDF: false,
+//							removePrefix: '',
+//							sourceFiles: ''
 						)
 					],
 					usePromotionTimestamp: false,
