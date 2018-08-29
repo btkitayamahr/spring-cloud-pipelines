@@ -26,7 +26,7 @@ envs['DOCKER_REGISTRY_PORT'] = '5000'
 
 dsl.pipelineJob('msa-pipeline-config') {
 	envs['APP_NAME'] = 'config'
-	envs['DOCKER_COMPOSE_YML'] = 'docker-compose-config.yml'
+	envs['DOCKER_COMPOSE_YML_TEST'] = 'docker-compose-config-test.yml'
 
 	wrappers {
 		parameters {
