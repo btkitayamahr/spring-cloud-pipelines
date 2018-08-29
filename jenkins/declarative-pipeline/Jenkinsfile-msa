@@ -3,15 +3,16 @@ node {
 		deleteDir()
 		sh 'git config --global http.sslVerify false'
 		
-		// git clone
+		// git clone app repository
 		checkout([
 			$class: 'GitSCM',
+			clearWorkspace: true,
 			branches: [
 				[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
 			],
-			doGenerateSubmoduleConfigurations: false,
-			extensions: [],
-			submoduleCfg: [],
+			extensions: [
+				[$class: 'WipeWorkspace'],
+			],
 			userRemoteConfigs: [
 				[
 					credentialsId: env.GIT_CREDENTIAL_ID,
@@ -26,10 +27,24 @@ node {
 				sh 'mvn clean install'
 			}
 		}
+
+		// git clone spring-cloud-pipelines repository
+		checkout([
+			$class: 'GitSCM',
+			clearWorkspace: true,
+			branches: [
+				[name: "*/${env.TOOLS_BRANCH}"]
+			],
+			userRemoteConfigs: [
+				[
+					credentialsId: env.GIT_CREDENTIAL_ID,
+					url: env.TOOLS_REPOSITORY
+				]
+			]
+		])
 	}
 
 	stage('Deploy to test') {
-		// Stop docker container
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
@@ -37,7 +52,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_01,
+							execCommand: '',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
@@ -45,8 +60,8 @@ node {
 							patternSeparator: '[, ]+',
 							remoteDirectory: '',
 							remoteDirectorySDF: false,
-							removePrefix: '',
-							sourceFiles: ''
+							removePrefix: 'common/src/main/bash/ec2',
+							sourceFiles: 'common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_YML_TEST
 						)
 					],
 					usePromotionTimestamp: false,
@@ -62,57 +77,7 @@ node {
 					transfers: [
 						sshTransfer(
 							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_02,
-							execTimeout: 120000,
-							flatten: false,
-							makeEmptyDirs: false,
-							noDefaultExcludes: false,
-							patternSeparator: '[, ]+',
-							remoteDirectory: '',
-							remoteDirectorySDF: false,
-							removePrefix: '',
-							sourceFiles: ''
-						)
-					],
-					usePromotionTimestamp: false,
-					useWorkspaceInPromotion: false,
-					verbose: false
-				)
-			]
-		)
-		sshPublisher(
-			publishers: [
-				sshPublisherDesc(
-					configName: env.SSH_CONFIG_NAME_TEST,
-					transfers: [
-						sshTransfer(
-							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_03,
-							execTimeout: 120000,
-							flatten: false,
-							makeEmptyDirs: false,
-							noDefaultExcludes: false,
-							patternSeparator: '[, ]+',
-							remoteDirectory: '',
-							remoteDirectorySDF: false,
-							removePrefix: '',
-							sourceFiles: ''
-						)
-					],
-					usePromotionTimestamp: false,
-					useWorkspaceInPromotion: false,
-					verbose: false
-				)
-			]
-		)
-		sshPublisher(
-			publishers: [
-				sshPublisherDesc(
-					configName: env.SSH_CONFIG_NAME_TEST,
-					transfers: [
-						sshTransfer(
-							excludes: '',
-							execCommand: env.DEPLOY_COMMAND_04,
+							execCommand: 'sudo docker-compose -f ' + env.DOCKER_COMPOSE_YML_TEST + ' up -d --force-recreate',
 							execTimeout: 120000,
 							flatten: false,
 							makeEmptyDirs: false,
