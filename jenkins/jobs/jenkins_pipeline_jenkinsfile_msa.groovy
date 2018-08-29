@@ -20,9 +20,10 @@ envs['TOOLS_REPOSITORY'] = binding.variables['TOOLS_REPOSITORY']
 envs['TOOLS_BRANCH'] = binding.variables['TOOLS_BRANCH']
 envs['SSH_CONFIG_NAME_TEST'] = 'msa-ap-test'
 envs['SSH_CONFIG_NAME_PROD'] = 'msa-ap-prod'
-envs['HOSTNAME_TEST'] = '13.115.229.114'
-envs['DOCKER_REGISTRY_HOSTNAME'] = '13.112.188.210'
-envs['DOCKER_REGISTRY_PORT'] = '5000'
+
+// envs['HOSTNAME_TEST'] = '13.115.229.114'
+// envs['DOCKER_REGISTRY_HOSTNAME'] = '13.112.188.210'
+// envs['DOCKER_REGISTRY_PORT'] = '5000'
 
 dsl.pipelineJob('msa-pipeline-config') {
 	envs['APP_NAME'] = 'config'
@@ -51,11 +52,7 @@ dsl.pipelineJob('msa-pipeline-config') {
 
 dsl.pipelineJob('msa-pipeline-discovery') {
 	envs['APP_NAME'] = 'discovery'
-	String imageTag = envs['DOCKER_REGISTRY_HOSTNAME'] + ':' + envs['DOCKER_REGISTRY_PORT'] + '/app/' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9000:9000 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DOCKER_COMPOSE_YML_TEST'] = 'docker-compose-discovery-test.yml'
 
 	wrappers {
 		parameters {
@@ -73,18 +70,14 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa2')}""")
 		}
 	}
 }
 
 dsl.pipelineJob('msa-pipeline-frontend') {
 	envs['APP_NAME'] = 'frontend'
-	String imageTag = envs['DOCKER_REGISTRY_HOSTNAME'] + ':' + envs['DOCKER_REGISTRY_PORT'] + '/app/' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9110:9110 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DOCKER_COMPOSE_YML_TEST'] = 'docker-compose-frontend-test.yml'
 
 	wrappers {
 		parameters {
@@ -102,18 +95,14 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa2')}""")
 		}
 	}
 }
 
 dsl.pipelineJob('msa-pipeline-contents') {
 	envs['APP_NAME'] = 'contents'
-	String imageTag = envs['DOCKER_REGISTRY_HOSTNAME'] + ':' + envs['DOCKER_REGISTRY_PORT'] + '/app/' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9120:9120 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DOCKER_COMPOSE_YML_TEST'] = 'docker-compose-contents-test.yml'
 
 	wrappers {
 		parameters {
@@ -131,18 +120,14 @@ dsl.pipelineJob('msa-pipeline-contents') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa2')}""")
 		}
 	}
 }
 
 dsl.pipelineJob('msa-pipeline-gateway') {
 	envs['APP_NAME'] = 'gateway'
-	String imageTag = envs['DOCKER_REGISTRY_HOSTNAME'] + ':' + envs['DOCKER_REGISTRY_PORT'] + '/app/' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_01'] = 'sudo docker stop ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_02'] = 'sudo docker rm ' + envs['APP_NAME']
-	envs['DEPLOY_COMMAND_03'] = 'sudo docker rmi ' + imageTag
-	envs['DEPLOY_COMMAND_04'] = 'sudo docker run -d --name ' + envs['APP_NAME'] + ' -p 9010:9010 -e SPRING_CLOUD_CONFIG_LABEL=scc -e INFO_CONFIG_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' -e INFO_EUREKA_HOSTNAME=' + envs['HOSTNAME_TEST'] + ' --net=msa_blank ' + imageTag
+	envs['DOCKER_COMPOSE_YML_TEST'] = 'docker-compose-gateway-test.yml'
 
 	wrappers {
 		parameters {
@@ -160,7 +145,7 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa2')}""")
 		}
 	}
 }
