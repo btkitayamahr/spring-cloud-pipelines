@@ -62,19 +62,6 @@ node {
 							remoteDirectorySDF: false,
 							removePrefix: 'common/src/main/bash/ec2',
 							sourceFiles: 'common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_YML_TEST
-						),
-						sshTransfer(
-							excludes: '',
-							execCommand: 'sudo docker-compose -f ' + env.DOCKER_COMPOSE_YML_TEST + ' up -d --force-recreate',
-							execTimeout: 120000,
-							flatten: false,
-							makeEmptyDirs: false,
-							noDefaultExcludes: false,
-							patternSeparator: '[, ]+',
-							remoteDirectory: '',
-							remoteDirectorySDF: false,
-							removePrefix: '',
-							sourceFiles: ''
 						)
 					],
 					usePromotionTimestamp: false,
@@ -83,7 +70,6 @@ node {
 				)
 			]
 		)
-/*
 		sshPublisher(
 			publishers: [
 				sshPublisherDesc(
@@ -109,6 +95,5 @@ node {
 				)
 			]
 		)
-*/
 	}
 }
