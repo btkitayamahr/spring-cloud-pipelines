@@ -6,12 +6,13 @@ node {
 		// git clone app repository
 		checkout([
 			$class: 'GitSCM',
+			clearWorkspace: true,
 			branches: [
 				[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
 			],
-			doGenerateSubmoduleConfigurations: false,
-			extensions: [],
-			submoduleCfg: [],
+			extensions: [
+				[$class: 'WipeWorkspace'],
+			],
 			userRemoteConfigs: [
 				[
 					credentialsId: env.GIT_CREDENTIAL_ID,
@@ -26,12 +27,13 @@ node {
 			branches: [
 				[name: "*/${env.TOOLS_BRANCH}"]
 			],
-			doGenerateSubmoduleConfigurations: false,
-			extensions: [],
-			submoduleCfg: [],
+			extensions: [
+				[$class: 'WipeWorkspace'],
+				[$class: 'RelativeTargetDirectory', relativeTargetDir: "${env.WORKSPACE}@tools"]
+			],
 			userRemoteConfigs: [
 				[
-//					credentialsId: env.TOOLS_CREDENTIAL_ID,
+//					credentialsId: env.GIT_CREDENTIAL_ID,
 					url: env.TOOLS_REPOSITORY
 				]
 			]
@@ -62,7 +64,7 @@ node {
 							remoteDirectory: '',
 							remoteDirectorySDF: false,
 							removePrefix: '',
-							sourceFiles: env.DOCKER_COMPOSE_NAME
+							sourceFiles: '${WORKSPACE}@tools/' + env.DOCKER_COMPOSE_NAME
 						)
 					],
 					usePromotionTimestamp: false,

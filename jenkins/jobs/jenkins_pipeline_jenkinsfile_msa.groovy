@@ -18,7 +18,6 @@ envs['GIT_BRANCH_NAME'] = 'scc'
 envs['GIT_CREDENTIAL_ID'] = 'git-gitbucket'
 envs['TOOLS_REPOSITORY'] = binding.variables['TOOLS_REPOSITORY']
 envs['TOOLS_BRANCH'] = binding.variables['TOOLS_BRANCH']
-envs['TOOLS_CREDENTIAL_ID'] = 'git-gitbucket'
 envs['SSH_CONFIG_NAME_TEST'] = 'msa-ap-test'
 envs['SSH_CONFIG_NAME_PROD'] = 'msa-ap-prod'
 envs['HOSTNAME_TEST'] = '13.115.229.114'
@@ -37,7 +36,6 @@ dsl.pipelineJob('msa-pipeline-config') {
 */
 	wrappers {
 		parameters {
-			stringParam('HOGE_FUGA', envs['HOGE_FUGA'], "")
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
