@@ -63,7 +63,7 @@ node {
 							patternSeparator: '[, ]+',
 							remoteDirectory: '',
 							remoteDirectorySDF: false,
-							removePrefix: '',
+							removePrefix: '${WORKSPACE}@tools/common/src/main/bash/ec2/',
 							sourceFiles: '${WORKSPACE}@tools/common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_NAME
 						)
 					],
