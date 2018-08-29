@@ -3,7 +3,7 @@ node {
 		deleteDir()
 		sh 'git config --global http.sslVerify false'
 		
-		// git clone
+		// git clone app repository
 		checkout([
 			$class: 'GitSCM',
 			branches: [
@@ -16,6 +16,23 @@ node {
 				[
 					credentialsId: env.GIT_CREDENTIAL_ID,
 					url: env.GIT_REPOSITORY
+				]
+			]
+		])
+
+		// git clone spring-cloud-pipelines repository
+		checkout([
+			$class: 'GitSCM',
+			branches: [
+				[name: "*/${env.TOOLS_BRANCH}"]
+			],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [],
+			submoduleCfg: [],
+			userRemoteConfigs: [
+				[
+//					credentialsId: env.TOOLS_CREDENTIAL_ID,
+					url: env.TOOLS_REPOSITORY
 				]
 			]
 		])

@@ -12,11 +12,13 @@ DslFactory dsl = this
 String jenkinsfileDir = binding.variables["JENKINSFILE_DIR"] ?: "${WORKSPACE}/jenkins/declarative-pipeline"
 
 Map<String, Object> envs = [:]
-envs['HOGE_FUGA'] = binding.variables["HOGE_FUGA"]
 
 envs['GIT_REPOSITORY'] = 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
 envs['GIT_BRANCH_NAME'] = 'scc'
 envs['GIT_CREDENTIAL_ID'] = 'git-gitbucket'
+envs['TOOLS_REPOSITORY'] = binding.variables['TOOLS_REPOSITORY']
+envs['TOOLS_BRANCH'] = binding.variables['TOOLS_BRANCH']
+envs['TOOLS_CREDENTIAL_ID'] = 'git-gitbucket'
 envs['SSH_CONFIG_NAME_TEST'] = 'msa-ap-test'
 envs['SSH_CONFIG_NAME_PROD'] = 'msa-ap-prod'
 envs['HOSTNAME_TEST'] = '13.115.229.114'
