@@ -5,8 +5,8 @@ services:
     container_name: discovery
     environment:
       SPRING_CLOUD_CONFIG_LABEL: scc
-      INFO_CONFIG_HOSTNAME: 13.115.229.114
-      INFO_EUREKA_HOSTNAME: 13.115.229.114
+      INFO_CONFIG_HOSTNAME: 52.198.239.61
+      INFO_EUREKA_HOSTNAME: 52.198.239.61
     ports:
       - "9000:9000"
     networks:
