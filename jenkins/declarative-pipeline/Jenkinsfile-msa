@@ -124,10 +124,10 @@ node {
 					transfers: [
 						sshTransfer(
 							removePrefix: 'common/src/main/bash/ec2',
-							sourceFiles: 'common/src/main/bash/ec2/docker-compose-' + env.APP_NAME + '-test.yml'
+							sourceFiles: 'common/src/main/bash/ec2/docker-compose-' + env.APP_NAME + '-prod.yml'
 						),
 						sshTransfer(
-							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-test.yml up -d',
+							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-prod.yml up -d',
 							execTimeout: 120000
 						)
 					],
