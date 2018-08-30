@@ -34,12 +34,12 @@ node {
 			$class: 'GitSCM',
 			clearWorkspace: true,
 			branches: [
-				[name: "*/${env.TOOLS_BRANCH}"]
+				[name: "*/${env.CONFIG_BRANCH_NAME ?: 'master'}"]
 			],
 			userRemoteConfigs: [
 				[
-					credentialsId: env.GIT_CREDENTIAL_ID,
-					url: env.TOOLS_REPOSITORY
+					credentialsId: env.CONFIG_CREDENTIAL_ID,
+					url: env.CONFIG_REPOSITORY
 				]
 			]
 		])
@@ -76,8 +76,8 @@ node {
 					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
-							removePrefix: 'common/src/main/bash/ec2',
-							sourceFiles: 'common/src/main/bash/ec2/docker-compose-' + env.APP_NAME + '-test.yml'
+							removePrefix: 'config-repo/' + env.APP_NAME + '/docker',
+							sourceFiles: 'config-repo/' + env.APP_NAME + '/docker/docker-compose-' + env.APP_NAME + '-test.yml'
 						),
 						sshTransfer(
 							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-test.yml up -d',
@@ -123,8 +123,8 @@ node {
 					configName: env.SSH_CONFIG_NAME_PROD,
 					transfers: [
 						sshTransfer(
-							removePrefix: 'common/src/main/bash/ec2',
-							sourceFiles: 'common/src/main/bash/ec2/docker-compose-' + env.APP_NAME + '-prod.yml'
+							removePrefix: 'config-repo/' + env.APP_NAME + '/docker',
+							sourceFiles: 'config-repo/' + env.APP_NAME + '/docker/docker-compose-' + env.APP_NAME + '-prod.yml'
 						),
 						sshTransfer(
 							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-prod.yml up -d',
