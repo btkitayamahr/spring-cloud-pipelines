@@ -1,0 +1,16 @@
+version: "2"
+services:
+  gateway:
+    image: 13.112.188.210:5000/app/gateway
+    container_name: gateway
+    environment:
+      SPRING_CLOUD_CONFIG_LABEL: scc
+      INFO_CONFIG_HOSTNAME: 54.168.54.7
+      INFO_EUREKA_HOSTNAME: 54.168.54.7
+    ports:
+      - "9010:9010"
+    networks:
+      - msa_blank
+networks:
+    msa_blank:
+      external: true

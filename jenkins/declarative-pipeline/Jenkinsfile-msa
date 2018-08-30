@@ -90,4 +90,51 @@ node {
 			]
 		)
 	}
+
+	stage('Deploy to prod') {
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_PROD,
+					transfers: [
+						sshTransfer(
+							execCommand: 'sudo docker stop ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker rm ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker image prune -a -f',
+							execTimeout: 120000
+						)
+					],
+					usePromotionTimestamp: false,
+					useWorkspaceInPromotion: false,
+					verbose: false
+				)
+			]
+		)
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_PROD,
+					transfers: [
+						sshTransfer(
+							removePrefix: 'common/src/main/bash/ec2',
+							sourceFiles: 'common/src/main/bash/ec2/docker-compose-' + env.APP_NAME + '-test.yml'
+						),
+						sshTransfer(
+							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-test.yml up -d',
+							execTimeout: 120000
+						)
+					],
+					usePromotionTimestamp: false,
+					useWorkspaceInPromotion: false,
+					verbose: false
+				)
+			]
+		)
+	}
 }
