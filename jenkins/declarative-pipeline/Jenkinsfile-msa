@@ -27,6 +27,7 @@ node {
 				sh 'mvn clean install'
 			}
 		}
+		sh 'docker image prune -a -f'
 
 		// git clone spring-cloud-pipelines repository
 		checkout([
