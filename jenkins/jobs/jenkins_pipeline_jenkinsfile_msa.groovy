@@ -31,8 +31,6 @@ dsl.pipelineJob('msa-pipeline-config') {
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
-			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
-			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
 		}
 		environmentVariables {
 			environmentVariables(envs)
@@ -55,8 +53,6 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
-			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
-			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
 		}
 		environmentVariables {
 			environmentVariables(envs)
@@ -79,8 +75,6 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
-			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
-			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
 		}
 		environmentVariables {
 			environmentVariables(envs)
@@ -103,8 +97,6 @@ dsl.pipelineJob('msa-pipeline-contents') {
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
-			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
-			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
 		}
 		environmentVariables {
 			environmentVariables(envs)
@@ -127,8 +119,6 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
-			stringParam('DOCKER_REGISTRY_HOSTNAME', envs['DOCKER_REGISTRY_HOSTNAME'], "")
-			stringParam('DOCKER_REGISTRY_PORT', envs['DOCKER_REGISTRY_PORT'], "")
 		}
 		environmentVariables {
 			environmentVariables(envs)
