@@ -1,6 +1,6 @@
 version: "2"
 services:
-  config:
+  frontend:
     image: 13.112.188.210:5000/app/frontend
     container_name: frontend
     environment:

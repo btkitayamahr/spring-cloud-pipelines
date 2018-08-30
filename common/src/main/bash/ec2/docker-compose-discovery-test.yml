@@ -1,6 +1,6 @@
 version: "2"
 services:
-  config:
+  discovery:
     image: 13.112.188.210:5000/app/discovery
     container_name: discovery
     environment:
