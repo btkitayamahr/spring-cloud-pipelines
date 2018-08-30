@@ -57,6 +57,10 @@ node {
 						sshTransfer(
 							execCommand: 'sudo docker rm ' + env.APP_NAME,
 							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker image prune -a -f',
+							execTimeout: 120000
 						)
 					],
 					usePromotionTimestamp: false,
