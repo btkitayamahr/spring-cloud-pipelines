@@ -51,42 +51,20 @@ node {
 					configName: env.SSH_CONFIG_NAME_TEST,
 					transfers: [
 						sshTransfer(
-							excludes: '',
-							execCommand: '',
-							execTimeout: 120000,
-							flatten: false,
-							makeEmptyDirs: false,
-							noDefaultExcludes: false,
-							patternSeparator: '[, ]+',
-							remoteDirectory: '',
-							remoteDirectorySDF: false,
 							removePrefix: 'common/src/main/bash/ec2',
-							sourceFiles: 'common/src/main/bash/ec2/' + env.DOCKER_COMPOSE_YML_TEST
-						)
-					],
-					usePromotionTimestamp: false,
-					useWorkspaceInPromotion: false,
-					verbose: false
-				)
-			]
-		)
-		sshPublisher(
-			publishers: [
-				sshPublisherDesc(
-					configName: env.SSH_CONFIG_NAME_TEST,
-					transfers: [
+							sourceFiles: 'common/src/main/bash/ec2/docker-compose-' + env.APP_NAME + '-test.yml'
+						),
 						sshTransfer(
-							excludes: '',
-							execCommand: 'sudo docker-compose -f ' + env.DOCKER_COMPOSE_YML_TEST + ' up -d --force-recreate',
-							execTimeout: 120000,
-							flatten: false,
-							makeEmptyDirs: false,
-							noDefaultExcludes: false,
-							patternSeparator: '[, ]+',
-							remoteDirectory: '',
-							remoteDirectorySDF: false,
-							removePrefix: '',
-							sourceFiles: ''
+							execCommand: 'sudo docker stop ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker rm ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-test.yml up -d',
+							execTimeout: 120000
 						)
 					],
 					usePromotionTimestamp: false,
