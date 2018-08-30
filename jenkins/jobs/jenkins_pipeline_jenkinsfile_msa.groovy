@@ -55,7 +55,6 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
 			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
@@ -80,7 +79,6 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 		parameters {
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
@@ -107,7 +105,6 @@ dsl.pipelineJob('msa-pipeline-contents') {
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
 			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
@@ -132,7 +129,6 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 		parameters {
 			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
 			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
 			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
