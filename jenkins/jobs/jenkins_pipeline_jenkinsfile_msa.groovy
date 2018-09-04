@@ -37,7 +37,7 @@ dsl.pipelineJob('msa-pipeline-config') {
 			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
 //			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 //			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
+//			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
 		}
@@ -64,7 +64,7 @@ dsl.pipelineJob('msa-pipeline-discovery') {
 			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
 //			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 //			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
+//			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
 		}
@@ -91,7 +91,7 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
 //			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 //			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
+//			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
 		}
@@ -118,7 +118,7 @@ dsl.pipelineJob('msa-pipeline-contents') {
 			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
 //			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 //			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
+//			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
 		}
@@ -145,7 +145,7 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
 //			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
 //			stringParam('CONFIG_BRANCH_NAME', envs['CONFIG_BRANCH_NAME'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
+//			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
 			stringParam('SSH_CONFIG_NAME_TEST', envs['SSH_CONFIG_NAME_TEST'], "")
 			stringParam('SSH_CONFIG_NAME_PROD', envs['SSH_CONFIG_NAME_PROD'], "")
 		}
