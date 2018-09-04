@@ -1,0 +1,141 @@
+node {
+	stage('Build and Upload') {
+		deleteDir()
+		sh 'git config --global http.sslVerify false'
+		
+		// git clone app repository
+		checkout([
+			$class: 'GitSCM',
+			clearWorkspace: true,
+			branches: [
+				[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
+			],
+			extensions: [
+				[$class: 'WipeWorkspace'],
+			],
+			userRemoteConfigs: [
+				[
+					credentialsId: env.GIT_CREDENTIAL_ID,
+					url: env.GIT_REPOSITORY
+				]
+			]
+		])
+
+		// Build app and create docker image
+		dir("${WORKSPACE}/" + env.APP_NAME) {
+			withMaven( maven: "Maven") {
+				sh 'mvn clean install'
+			}
+		}
+		sh 'docker image prune -a -f'
+
+		// git clone spring-cloud-pipelines repository
+		checkout([
+			$class: 'GitSCM',
+			clearWorkspace: true,
+			branches: [
+				[name: "*/${env.CONFIG_BRANCH_NAME ?: 'master'}"]
+			],
+			userRemoteConfigs: [
+				[
+					credentialsId: env.CONFIG_CREDENTIAL_ID,
+					url: env.CONFIG_REPOSITORY
+				]
+			]
+		])
+	}
+
+	stage('Deploy to test') {
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_TEST,
+					transfers: [
+						sshTransfer(
+							execCommand: 'sudo docker stop ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker rm ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker image prune -a -f',
+							execTimeout: 120000
+						)
+					],
+					usePromotionTimestamp: false,
+					useWorkspaceInPromotion: false,
+					verbose: false
+				)
+			]
+		)
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_TEST,
+					transfers: [
+						sshTransfer(
+							removePrefix: 'config-repo/' + env.APP_NAME + '/docker',
+							sourceFiles: 'config-repo/' + env.APP_NAME + '/docker/docker-compose-' + env.APP_NAME + '-test.yml'
+						),
+						sshTransfer(
+							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-test.yml up -d',
+							execTimeout: 120000
+						)
+					],
+					usePromotionTimestamp: false,
+					useWorkspaceInPromotion: false,
+					verbose: false
+				)
+			]
+		)
+	}
+
+	stage('Deploy to prod') {
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_PROD,
+					transfers: [
+						sshTransfer(
+							execCommand: 'sudo docker stop ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker rm ' + env.APP_NAME,
+							execTimeout: 120000
+						),
+						sshTransfer(
+							execCommand: 'sudo docker image prune -a -f',
+							execTimeout: 120000
+						)
+					],
+					usePromotionTimestamp: false,
+					useWorkspaceInPromotion: false,
+					verbose: false
+				)
+			]
+		)
+		sshPublisher(
+			publishers: [
+				sshPublisherDesc(
+					configName: env.SSH_CONFIG_NAME_PROD,
+					transfers: [
+						sshTransfer(
+							removePrefix: 'config-repo/' + env.APP_NAME + '/docker',
+							sourceFiles: 'config-repo/' + env.APP_NAME + '/docker/docker-compose-' + env.APP_NAME + '-prod.yml'
+						),
+						sshTransfer(
+							execCommand: 'sudo docker-compose -f docker-compose-' + env.APP_NAME + '-prod.yml up -d',
+							execTimeout: 120000
+						)
+					],
+					usePromotionTimestamp: false,
+					useWorkspaceInPromotion: false,
+					verbose: false
+				)
+			]
+		)
+	}
+}
