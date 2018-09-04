@@ -13,6 +13,8 @@ String jenkinsfileDir = binding.variables["JENKINSFILE_DIR"] ?: "${WORKSPACE}/je
 
 Map<String, Object> envs = [:]
 
+envs['PIPELINE_VERSION'] = binding.variables["PIPELINE_VERSION"] ?: ""
+envs['REPO_WITH_BINARIES_CREDENTIAL_ID'] = binding.variables['REPO_WITH_BINARIES_CREDENTIAL_ID'] ?: ''
 envs['GIT_REPOSITORY'] = 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
 envs['GIT_BRANCH_NAME'] = 'scc'
 envs['TOOLS_REPOSITORY'] = binding.variables["TOOLS_REPOSITORY"]
