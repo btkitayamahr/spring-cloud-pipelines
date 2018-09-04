@@ -47,7 +47,7 @@ dsl.pipelineJob('msa-pipeline-config') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
 		}
 	}
 }
@@ -101,7 +101,7 @@ dsl.pipelineJob('msa-pipeline-frontend') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
 		}
 	}
 }
@@ -128,7 +128,7 @@ dsl.pipelineJob('msa-pipeline-contents') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
 		}
 	}
 }
@@ -155,7 +155,7 @@ dsl.pipelineJob('msa-pipeline-gateway') {
 	}
 	definition {
 		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
 		}
 	}
 }
