@@ -149,29 +149,6 @@ pipeline {
 			}
 		}
 
-		stage("Deploy to test latest prod version") {
-			when {
-				environment name: 'DB_ROLLBACK_STEP_REQUIRED',
-					value: 'true'
-			}
-			steps {
-				sh '''#!/bin/bash
-				${WORKSPACE}@tools/common/src/main/bash/test_rollback_deploy.sh
-				'''
-			}
-		}
-
-		stage("Tests on test latest prod version") {
-			when {
-				environment name: 'DB_ROLLBACK_STEP_REQUIRED',
-					value: 'true'
-			}
-			steps {
-				sh '''#!/bin/bash
-				${WORKSPACE}@tools/common/src/main/bash/test_rollback_smoke.sh
-				'''
-			}
-		}
 	}
 //	post {
 //		always {
