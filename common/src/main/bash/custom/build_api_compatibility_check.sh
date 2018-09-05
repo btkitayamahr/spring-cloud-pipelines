@@ -1,3 +1,5 @@
 #!/bin/bash
 
-echo 'api compatibility check'
+function apiCompatibilityCheck() {
+    echo "I am executing a custom api compatibility check function"
+}

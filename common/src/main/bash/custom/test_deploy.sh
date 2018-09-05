@@ -1,3 +1,5 @@
 #!/bin/bash
 
-echo 'test deploy'
+function testDeploy() {
+    echo "I am executing a custom test deploy function"
+}
