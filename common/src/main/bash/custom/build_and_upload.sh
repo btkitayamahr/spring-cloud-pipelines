@@ -1,3 +1,4 @@
 #!/bin/bash
 
-mvn clean install
+mvn clean install -f ./contents/pom.xml
+docker image prune -a -f
