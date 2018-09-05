@@ -36,6 +36,20 @@ pipeline {
 					]
 				])
 
+				checkout([
+					$class: 'GitSCM',
+					branches: [
+						[name: "*/${env.CONFIG_BRANCH}"]
+					],
+					extensions: [
+						[$class: 'WipeWorkspace'],
+						[$class: 'RelativeTargetDirectory', relativeTargetDir: "${env.WORKSPACE}@config"]
+					],
+					userRemoteConfigs: [
+						[credentialsId: env.GIT_CREDENTIAL_ID, url: env.CONFIG_REPOSITORY]
+					]
+				])
+
 				script {
 					if (!env.PIPELINE_VERSION) {
 						env.PIPELINE_VERSION = VersionNumber(
@@ -103,13 +117,6 @@ pipeline {
 					}
 					// remove::end[K8S]
 
-//					env.DEPLOY_TO_PROD = input message: '', parameters: [
-//						choice(
-//							name: 'Deploy to prod?',
-//							choices: 'no\nyes',
-//							description: 'Choose "yes" if you want to deploy this build to production'
-//						)
-//					]
 				}
 				sh """#!/bin/bash
 				${
@@ -150,11 +157,11 @@ pipeline {
 		}
 
 	}
-//	post {
-//		always {
-//			junit '**/surefire-reports/*.xml,**/test-results/**/*.xml'
+	post {
+		always {
+			junit '**/surefire-reports/*.xml,**/test-results/**/*.xml'
 //			archive "**/build/**/k8s/*.yml"
 //			archive "**/target/**/k8s/*.yml"
-//		}
-//	}
+		}
+	}
 }
