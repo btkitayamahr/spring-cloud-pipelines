@@ -4,7 +4,15 @@ DslFactory factory = this
 
 factory.job('msa-pipeline-seed') {
 	scm {
-		git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
+		git {
+			remote('${TOOLS_REPOSITORY}')
+			branch('${TOOLS_BRANCH}')
+			extensions {
+				submoduleOptions {
+					recursive()
+				}
+			}
+		}
 	}
 	wrappers {
 		parameters {

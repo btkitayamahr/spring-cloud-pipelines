@@ -82,3 +82,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install apt-tran
 #    jq -r '.plugins[] | .shortName +":"+ .version' | sort > plugins.txt
 #
 RUN install-plugins.sh $( paste -sd' ' /usr/share/jenkins/plugins.txt )
+
+# Install maven
+RUN apt-get update && \
+    apt-get install -y maven && \
+    apt-get clean
