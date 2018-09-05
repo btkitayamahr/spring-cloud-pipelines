@@ -6,7 +6,8 @@ factory.job('msa-pipeline-seed') {
 	scm {
 		git {
 			remote {
-				git('${TOOLS_REPOSITORY}', '${TOOLS_BRANCH}')
+				url('${TOOLS_REPOSITORY}')
+				branch('${TOOLS_BRANCH}')
 			}
 			extensions {
 				submoduleOptions {
