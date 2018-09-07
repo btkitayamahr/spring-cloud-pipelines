@@ -9,10 +9,22 @@ import javaposse.jobdsl.dsl.DslFactory
 
 DslFactory dsl = this
 
+// Git credentials to use
+String gitCredentials = binding.variables["GIT_CREDENTIAL_ID"] ?: "git"
+String gitSshCredentials = binding.variables["GIT_SSH_CREDENTIAL_ID"] ?: "gitSsh"
+Boolean gitUseSshKey= Boolean.parseBoolean(binding.variables["GIT_USE_SSH_KEY"] ?: "false")
+// we're parsing the REPOS parameter to retrieve list of repos to build
+String repos = binding.variables["REPOS"] ?: [
+		"https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/btkitayamahr/config",
+		"https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/btkitayamahr/contents",
+		"https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/btkitayamahr/discovery",
+		"https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/btkitayamahr/frontend",
+		"https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/btkitayamahr/gateway"
+	].join(",")
+List<String> parsedRepos = repos.split(",")
 String jenkinsfileDir = binding.variables["JENKINSFILE_DIR"] ?: "${WORKSPACE}/jenkins/declarative-pipeline"
 
 Map<String, Object> envs = [:]
-
 envs['PIPELINE_VERSION'] = binding.variables["PIPELINE_VERSION"] ?: ""
 envs['REPO_WITH_BINARIES_CREDENTIAL_ID'] = binding.variables['REPO_WITH_BINARIES_CREDENTIAL_ID'] ?: ''
 envs['GIT_REPOSITORY'] = 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
@@ -26,137 +38,53 @@ envs['CONFIG_CREDENTIAL_ID'] = 'git-gitbucket'
 envs['HOSTNAME_TEST'] = '52.198.239.61'
 envs['USERNAME_TEST'] = 'centos'
 
-dsl.pipelineJob('msa-pipeline-config') {
-	envs['APP_NAME'] = 'config'
-
-	wrappers {
-		parameters {
-			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
-			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('TOOLS_REPOSITORY', envs['TOOLS_REPOSITORY'], "")
-			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
-			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
-			stringParam('CONFIG_BRANCH', envs['CONFIG_BRANCH'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
-			stringParam('HOSTNAME_TEST', envs['HOSTNAME_TEST'], "")
-			stringParam('USERNAME_TEST', envs['USERNAME_TEST'], "")
+parsedRepos.each {
+	String gitRepoName = it.split('/').last() - '.git'
+	String fullGitRepo = it
+	String branchName = "master"
+	int customNameIndex = it.indexOf('$')
+	int customBranchIndex = it.indexOf('#')
+	if (customNameIndex == -1 && customBranchIndex == -1) {
+		// url
+		fullGitRepo = it
+		branchName = "master"
+	} else if (customNameIndex > -1 && (customNameIndex < customBranchIndex || customBranchIndex == -1)) {
+		fullGitRepo = it.substring(0, customNameIndex)
+		if (customNameIndex < customBranchIndex) {
+			// url$newName#someBranch
+			gitRepoName = it.substring(customNameIndex + 1, customBranchIndex)
+			branchName = it.substring(customBranchIndex + 1)
+		} else if (customBranchIndex == -1) {
+			// url$newName
+			gitRepoName = it.substring(customNameIndex + 1)
 		}
-		environmentVariables {
-			environmentVariables(envs)
-		}
-	}
-	definition {
-		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
-		}
-	}
-}
-
-dsl.pipelineJob('msa-pipeline-discovery') {
-	envs['APP_NAME'] = 'discovery'
-
-	wrappers {
-		parameters {
-			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
-			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('TOOLS_REPOSITORY', envs['TOOLS_REPOSITORY'], "")
-			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
-			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
-			stringParam('CONFIG_BRANCH', envs['CONFIG_BRANCH'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
-			stringParam('HOSTNAME_TEST', envs['HOSTNAME_TEST'], "")
-			stringParam('USERNAME_TEST', envs['USERNAME_TEST'], "")
-		}
-		environmentVariables {
-			environmentVariables(envs)
+	} else if (customBranchIndex > -1) {
+		fullGitRepo = it.substring(0, customBranchIndex)
+		if (customBranchIndex < customNameIndex) {
+			// url#someBranch$newName
+			gitRepoName = it.substring(customNameIndex + 1)
+			branchName = it.substring(customBranchIndex + 1, customNameIndex)
+		} else if (customNameIndex == -1) {
+			// url#someBranch
+			gitRepoName = it.substring(it.lastIndexOf("/") + 1, customBranchIndex)
+			branchName = it.substring(customBranchIndex + 1)
 		}
 	}
-	definition {
-		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
-		}
-	}
-}
+	String projectName = "${gitRepoName}-declarative-pipeline"
+	
+	envs['GIT_REPOSITORY'] = fullGitRepo
+	envs['GIT_BRANCH_NAME'] = branchName
 
-dsl.pipelineJob('msa-pipeline-frontend') {
-	envs['APP_NAME'] = 'frontend'
-
-	wrappers {
-		parameters {
-			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
-			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('TOOLS_REPOSITORY', envs['TOOLS_REPOSITORY'], "")
-			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
-			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
-			stringParam('CONFIG_BRANCH', envs['CONFIG_BRANCH'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
-			stringParam('HOSTNAME_TEST', envs['HOSTNAME_TEST'], "")
-			stringParam('USERNAME_TEST', envs['USERNAME_TEST'], "")
+	dsl.pipelineJob(projectName) {
+		wrappers {
+			environmentVariables {
+				environmentVariables(envs)
+			}
 		}
-		environmentVariables {
-			environmentVariables(envs)
-		}
-	}
-	definition {
-		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
-		}
-	}
-}
-
-dsl.pipelineJob('msa-pipeline-contents') {
-	envs['APP_NAME'] = 'contents'
-
-	wrappers {
-		parameters {
-			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
-			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('TOOLS_REPOSITORY', envs['TOOLS_REPOSITORY'], "")
-			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
-			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
-			stringParam('CONFIG_BRANCH', envs['CONFIG_BRANCH'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
-			stringParam('HOSTNAME_TEST', envs['HOSTNAME_TEST'], "")
-			stringParam('USERNAME_TEST', envs['USERNAME_TEST'], "")
-		}
-		environmentVariables {
-			environmentVariables(envs)
-		}
-	}
-	definition {
-		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
-		}
-	}
-}
-
-dsl.pipelineJob('msa-pipeline-gateway') {
-	envs['APP_NAME'] = 'gateway'
-
-	wrappers {
-		parameters {
-			stringParam('GIT_REPOSITORY', envs['GIT_REPOSITORY'], "")
-			stringParam('GIT_BRANCH_NAME', envs['GIT_BRANCH_NAME'], "")
-			stringParam('GIT_CREDENTIAL_ID', envs['GIT_CREDENTIAL_ID'], "")
-			stringParam('TOOLS_REPOSITORY', envs['TOOLS_REPOSITORY'], "")
-			stringParam('TOOLS_BRANCH', envs['TOOLS_BRANCH'], "")
-			stringParam('CONFIG_REPOSITORY', envs['CONFIG_REPOSITORY'], "")
-			stringParam('CONFIG_BRANCH', envs['CONFIG_BRANCH'], "")
-			stringParam('CONFIG_CREDENTIAL_ID', envs['CONFIG_CREDENTIAL_ID'], "")
-			stringParam('HOSTNAME_TEST', envs['HOSTNAME_TEST'], "")
-			stringParam('USERNAME_TEST', envs['USERNAME_TEST'], "")
-		}
-		environmentVariables {
-			environmentVariables(envs)
-		}
-	}
-	definition {
-		cps {
-			script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+		definition {
+			cps {
+				script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-msa')}""")
+			}
 		}
 	}
 }
