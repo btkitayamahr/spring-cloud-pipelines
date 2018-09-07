@@ -25,16 +25,11 @@ List<String> parsedRepos = repos.split(",")
 String jenkinsfileDir = binding.variables["JENKINSFILE_DIR"] ?: "${WORKSPACE}/jenkins/declarative-pipeline"
 
 Map<String, Object> envs = [:]
-// envs['PIPELINE_VERSION'] = binding.variables["PIPELINE_VERSION"] ?: ""
-// envs['REPO_WITH_BINARIES_CREDENTIAL_ID'] = binding.variables['REPO_WITH_BINARIES_CREDENTIAL_ID'] ?: ''
-// envs['GIT_REPOSITORY'] = 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
-// envs['GIT_BRANCH_NAME'] = 'scc'
-envs['TOOLS_REPOSITORY'] = binding.variables["TOOLS_REPOSITORY"]
-envs['TOOLS_BRANCH'] = binding.variables["TOOLS_BRANCH"]
-envs['GIT_CREDENTIAL_ID'] = 'git-gitbucket'
-envs['CONFIG_REPOSITORY'] = 'https://terasoluna-cloud-management-423625999.ap-northeast-1.elb.amazonaws.com/git/terasoluna-msa/verification.git'
-envs['CONFIG_BRANCH'] = 'scc'
-envs['CONFIG_CREDENTIAL_ID'] = 'git-gitbucket'
+envs['GIT_CREDENTIAL_ID'] = gitCredentials
+envs['TOOLS_REPOSITORY'] = binding.variables["TOOLS_REPOSITORY"] ?: 'https://github.com/spring-cloud/spring-cloud-pipelines'
+envs["TOOLS_BRANCH"] = binding.variables["TOOLS_BRANCH"] ?: "master"
+envs['CONFIG_REPOSITORY'] = binding.variables["CONFIG_REPOSITORY"]
+envs["CONFIG_BRANCH"] = binding.variables["CONFIG_BRANCH"] ?: "master"
 envs['HOSTNAME_TEST'] = '52.198.239.61'
 envs['USERNAME_TEST'] = 'centos'
 
