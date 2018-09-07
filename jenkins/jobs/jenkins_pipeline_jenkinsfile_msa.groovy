@@ -74,6 +74,7 @@ parsedRepos.each {
 	
 	envs['GIT_REPOSITORY'] = fullGitRepo
 	envs['GIT_BRANCH_NAME'] = branchName
+	envs['APP_NAME'] = gitRepoName
 
 	dsl.pipelineJob(projectName) {
 		wrappers {
