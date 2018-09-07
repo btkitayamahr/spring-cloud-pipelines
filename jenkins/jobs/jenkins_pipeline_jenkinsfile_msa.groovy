@@ -36,7 +36,7 @@ envs['USERNAME_TEST'] = 'centos'
 parsedRepos.each {
 	String gitRepoName = it.split('/').last() - '.git'
 	String fullGitRepo = it
-	String branchName = "master"
+	String branchName = "scc"
 	int customNameIndex = it.indexOf('$')
 	int customBranchIndex = it.indexOf('#')
 	if (customNameIndex == -1 && customBranchIndex == -1) {
